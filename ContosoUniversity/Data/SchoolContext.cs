@@ -23,17 +23,20 @@ namespace ContosoUniversity.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure all DateTime properties to use datetime2
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            // SQL Server needs an explicit high-precision type; SQLite uses its native mapping.
+            if (Database.IsSqlServer())
             {
-                var properties = entityType.ClrType.GetProperties()
-                    .Where(p => p.PropertyType == typeof(DateTime) || p.PropertyType == typeof(DateTime?));
-
-                foreach (var property in properties)
+                foreach (var entityType in modelBuilder.Model.GetEntityTypes())
                 {
-                    modelBuilder.Entity(entityType.ClrType)
-                        .Property(property.Name)
-                        .HasColumnType("datetime2");
+                    var properties = entityType.ClrType.GetProperties()
+                        .Where(p => p.PropertyType == typeof(DateTime) || p.PropertyType == typeof(DateTime?));
+
+                    foreach (var property in properties)
+                    {
+                        modelBuilder.Entity(entityType.ClrType)
+                            .Property(property.Name)
+                            .HasColumnType("datetime2");
+                    }
                 }
             }
 
