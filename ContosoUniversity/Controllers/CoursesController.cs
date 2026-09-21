@@ -56,7 +56,7 @@ namespace ContosoUniversity.Controllers
         // POST: Courses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind("CourseID,Title,Credits,DepartmentID,TeachingMaterialImagePath")] Course course, IFormFile teachingMaterialImage)
+        public ActionResult Create([Bind("CourseID,Title,Credits,DepartmentID")] Course course, IFormFile teachingMaterialImage)
         {
             if (ModelState.IsValid)
             {
@@ -137,8 +137,18 @@ namespace ContosoUniversity.Controllers
         // POST: Courses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind("CourseID,Title,Credits,DepartmentID,TeachingMaterialImagePath")] Course course, IFormFile teachingMaterialImage)
+        public ActionResult Edit([Bind("CourseID,Title,Credits,DepartmentID")] Course course, IFormFile teachingMaterialImage)
         {
+            var existingCourse = db.Courses
+                .AsNoTracking()
+                .SingleOrDefault(c => c.CourseID == course.CourseID);
+            if (existingCourse == null)
+            {
+                return NotFound();
+            }
+
+            course.TeachingMaterialImagePath = existingCourse.TeachingMaterialImagePath;
+
             if (ModelState.IsValid)
             {
                 // Handle file upload if a new image is provided
@@ -173,9 +183,9 @@ namespace ContosoUniversity.Controllers
                         var filePath = Path.Combine(_uploadsPath, fileName);
 
                         // Delete old file if exists
-                        if (!string.IsNullOrEmpty(course.TeachingMaterialImagePath))
+                        if (!string.IsNullOrEmpty(existingCourse.TeachingMaterialImagePath))
                         {
-                            var oldFilePath = Path.Combine(_uploadsPath, Path.GetFileName(course.TeachingMaterialImagePath));
+                            var oldFilePath = Path.Combine(_uploadsPath, Path.GetFileName(existingCourse.TeachingMaterialImagePath));
                             if (System.IO.File.Exists(oldFilePath))
                             {
                                 System.IO.File.Delete(oldFilePath);
