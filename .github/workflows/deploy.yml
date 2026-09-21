@@ -48,7 +48,7 @@ jobs:
           scope: subscription
           region: ${{ inputs.location }}
           template: infra/main.bicep
-          deploymentName: contoso-university-${{ inputs.environment }}-ne
+          deploymentName: contoso-university-${{ inputs.environment }}-eastus
           parameters: >
             location=${{ inputs.location }}
             environmentName=${{ inputs.environment }}
