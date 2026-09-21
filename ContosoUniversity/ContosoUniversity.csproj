@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.11" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Content/**/*;Scripts/**/*" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
