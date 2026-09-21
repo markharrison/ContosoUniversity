@@ -5,7 +5,10 @@ using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var useAzureSql = builder.Environment.IsProduction();
+var useAzureSql = string.Equals(
+    builder.Configuration["DatabaseProvider"],
+    "SqlServer",
+    StringComparison.OrdinalIgnoreCase);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' was not found.");
 

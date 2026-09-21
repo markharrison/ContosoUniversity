@@ -46,6 +46,9 @@ namespace ContosoUniversity.Data
             modelBuilder.Entity<OfficeAssignment>().ToTable("OfficeAssignment");
             modelBuilder.Entity<CourseAssignment>().ToTable("CourseAssignment");
             modelBuilder.Entity<Notification>().ToTable("Notification");
+            modelBuilder.Entity<Department>()
+                .Property(d => d.Budget)
+                .HasPrecision(18, 2);
 
             // Configure Table-per-Hierarchy (TPH) inheritance for Person
             // Map the base Person class and its derived classes to a single table

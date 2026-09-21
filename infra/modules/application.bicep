@@ -72,6 +72,10 @@ resource app 'Microsoft.Web/sites@2024-11-01' = {
           value: 'Production'
         }
         {
+          name: 'DatabaseProvider'
+          value: 'SqlServer'
+        }
+        {
           name: 'ConnectionStrings__DefaultConnection'
           value: 'Server=tcp:${sqlServer.properties.fullyQualifiedDomainName},1433;Initial Catalog=${database.name};User ID=${sqlAdministratorLogin};${passwordProperty}=${sqlAdministratorPassword};Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
         }
