@@ -14,7 +14,7 @@ public sealed class EndpointTests : IClassFixture<ContosoUniversityFactory>
     }
 
     [Theory]
-    [InlineData("/", "Contoso University")]
+    [InlineData("/", "ASP.NET Core MVC and Entity Framework Core on .NET 10")]
     [InlineData("/Home/About", "Student Body Statistics")]
     [InlineData("/Students", "Alexander")]
     [InlineData("/Courses", "Chemistry")]
