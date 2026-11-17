@@ -16,11 +16,14 @@ resource plan 'Microsoft.Web/serverfarms@2024-11-01' = {
   location: location
   kind: 'linux'
   sku: {
-    name: 'B1'
-    tier: 'Basic'
+    name: sku
+    tier: 'Standard'
+    capacity: 1
   }
   properties: {
-    reserved: true
+    perSiteScaling: false
+    maximumElasticWorkerCount: 10 // Set the maximum number of workers for async scaling
+    isElastic: true // Enable elastic scaling
   }
 }
 
