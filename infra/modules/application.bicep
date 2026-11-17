@@ -21,9 +21,10 @@ resource plan 'Microsoft.Web/serverfarms@2024-11-01' = {
     capacity: 1
   }
   properties: {
+    reserved: true
     perSiteScaling: false
-    maximumElasticWorkerCount: 10 // Set the maximum number of workers for async scaling
-    isElastic: true // Enable elastic scaling
+    elasticScaleEnabled: true
+    maximumElasticWorkerCount: 10
   }
 }
 
